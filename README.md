@@ -1,4 +1,4 @@
-## HW1 MERN COURSE
+## SERVER CHAT APP
 
 - In this assignment, I have to create a REST API and Socket.io server, based on Node.js, Express, and Socket.io.
 - I also required to write a unit test for each API, socket.io events.
