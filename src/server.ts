@@ -21,12 +21,19 @@ db.on('error', error => { console.error(error) });
 db.once('open', () => { console.log('connected to mongo DB') });
 
 app.use('/public', express.static('public'));
+app.use('/uploads', express.static('uploads'))
 
 import authRouter from './routes/auth_route';
 app.use('/auth', authRouter);
 
 import postRouter from './routes/post_route';
 app.use('/post', postRouter);
+
+import studentRouter from './routes/student_route';
+app.use('/student', studentRouter);
+
+import fileRouter from './routes/file_route';
+app.use('/file', fileRouter);
 
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
