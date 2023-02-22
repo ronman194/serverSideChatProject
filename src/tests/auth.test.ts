@@ -4,6 +4,9 @@ import mongoose from 'mongoose'
 import Post from '../models/post_model'
 import User from '../models/user_model'
 
+
+const userFirstName = "user"
+const userLastName = "userr"
 const userEmail = "user1@gmail.com"
 const userPassword = "12345"
 let accessToken = ''
@@ -28,6 +31,8 @@ describe("Auth Tests", ()=>{
 
     test("Register test",async ()=>{
         const response = await request(app).post('/auth/register').send({
+            "firstName": userFirstName,
+            "lastName": userLastName,
             "email": userEmail,
             "password": userPassword 
         })

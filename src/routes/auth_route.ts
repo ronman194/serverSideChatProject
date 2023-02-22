@@ -1,6 +1,8 @@
 
 
 import express from 'express'
+import Req from '../common/Req'
+import Res from '../common/Res'
 const router = express.Router()
 import auth from '../controllers/auth'
 
@@ -28,9 +30,17 @@ import auth from '../controllers/auth'
 *     User:
 *       type: object
 *       required:
+*         - firstName
+*         - lastName
 *         - email
 *         - password
 *       properties:
+*         firstName:
+*           type: string
+*           description: The user first name
+*         lastName:
+*           type: string
+*           description: The user last name
 *         email:
 *           type: string
 *           description: The user email
@@ -38,6 +48,8 @@ import auth from '../controllers/auth'
 *           type: string
 *           description: The user password
 *       example:
+*         firstName: 'bob'
+*         lastName: 'bobi'
 *         email: 'bob@gmail.com'
 *         password: '123456'
 */
@@ -105,7 +117,6 @@ router.post('/register',auth.register)
  */
 router.post('/login',auth.login)
 
-
 /**
  * @swagger
  * /auth/refresh:
@@ -149,6 +160,23 @@ router.get('/refresh',auth.refresh)
  */
 router.get('/logout',auth.logout)
 
+
+router.put('/update', auth.authenticateMiddleware, async (req, res) => {
+    try {
+        const response: Res = await auth.updateProfile(Req.fromRestRequest(req));
+        if (response.err == null) {
+            response.sendRestResponse(res);
+        }
+        if (response.err.code === 400) {
+            return res.status(400).send({
+                'status': 'fail',
+                'message': response.err.message
+            });
+        }
+    } catch (err) {
+        console.log("ERR" + err)
+    }
+});
 export = router
 
 

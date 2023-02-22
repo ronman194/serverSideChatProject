@@ -8,6 +8,9 @@ const postSchema = new mongoose.Schema({
     sender: {
         type: String,
         required: true
+    },
+    postImage:{
+        type: String
     }
 })
 

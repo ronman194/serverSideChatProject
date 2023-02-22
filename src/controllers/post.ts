@@ -38,7 +38,8 @@ const addNewPost = async (req) => {
 
     const post = new Post({
         message: req.body.message,
-        sender: req.body.userId     //extract the user id from the auth 
+        sender: req.body.sender,     //extract the user id from the auth 
+        postImage: req.body.image
     });
 
     if (post.message == undefined || post.message == null) {
