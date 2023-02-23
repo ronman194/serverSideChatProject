@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import Res from '../common/Res'
 import Err from '../common/Err'
+import Post from '../models/post_model'
 
 function sendError(res: Response, error: string) {
     res.status(400).send({
@@ -165,6 +166,7 @@ const updateProfile = async (req) => {
         const user = await User.findOneAndUpdate({ 'email': email },
             { 'firstName': updateFirstName, 'lastName': updateLastName, 'profileImage': updateImgProfile }, { new: true }
         )
+        await Post.updateMany({ 'sender': email }, { 'senderProfileImage': updateImgProfile })
         // console.log('user ' + user)
         return new Res(user, email, null);
     } catch (err) {

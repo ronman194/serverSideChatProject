@@ -39,7 +39,10 @@ const addNewPost = async (req) => {
     const post = new Post({
         message: req.body.message,
         sender: req.body.sender,     //extract the user id from the auth 
-        postImage: req.body.image
+        postImage: req.body.image,
+        senderFirstName: req.body.firstName,
+        senderLastName: req.body.lastName,
+        senderProfileImage: req.body.profileImage,
     });
 
     if (post.message == undefined || post.message == null) {
