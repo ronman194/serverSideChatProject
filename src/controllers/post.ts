@@ -21,7 +21,7 @@ const getAllPosts = async (req) => {
 
 const getPostById = async (req) => {
     let param = req.params.id;
-    if (param == null || undefined){
+    if (param == null || undefined) {
         param = req.params;
     }
     try {
@@ -50,7 +50,7 @@ const addNewPost = async (req) => {
         post.sender = req.userId;
         try {
             const newPost = await post.save();
-            console.log("Save Succesful id: "+ newPost._id);
+            console.log("Save Succesful id: " + newPost._id);
             return new Res(newPost, req.userId, null);
         } catch (err) {
             return new Res(null, req.userId, new Err(400, err.message));
@@ -70,11 +70,12 @@ const addNewPost = async (req) => {
 const putPostById = async (req) => {
     try {
         const updateMessage = req.body.message;
+        const updateImage = req.body.updateImage;
         let postId = req.params.id;
-        if (postId == null || postId == undefined){
+        if (postId == null || postId == undefined) {
             postId = req.params;
         }
-        const post = await Post.findByIdAndUpdate(postId, {'message':updateMessage}, { new: true })
+        const post = await Post.findByIdAndUpdate(postId, { 'message': updateMessage, 'postImage': updateImage }, { new: true })
         return new Res(post, req.body.userId, null);
     } catch (err) {
         console.log("fail to update post in db")
