@@ -83,5 +83,18 @@ const putPostById = async (req) => {
     }
 }
 
+const deletePostById = async (req) => {
+    let param = req.params.id;
+    if (param == null || undefined) {
+        param = req.params;
+    }
+    try {
+        await Post.findByIdAndDelete(param);
+        return new Res({}, req.body.userId, null);
+    } catch (err) {
+        return new Res(new Err(400, err.message), req.body.userId, new Err(400, err.message));
+    }
+}
 
-export = { getAllPosts, addNewPost, getPostById, putPostById }
+
+export = { getAllPosts, addNewPost, getPostById, putPostById, deletePostById }
