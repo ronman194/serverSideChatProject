@@ -166,7 +166,12 @@ const updateProfile = async (req) => {
         const user = await User.findOneAndUpdate({ 'email': email },
             { 'firstName': updateFirstName, 'lastName': updateLastName, 'profileImage': updateImgProfile }, { new: true }
         )
-        await Post.updateMany({ 'sender': email }, { 'senderProfileImage': updateImgProfile })
+        await Post.updateMany({ 'sender': email },
+            {
+                'senderFirstName': updateFirstName,
+                'senderLastName': updateLastName,
+                'senderProfileImage': updateImgProfile
+            })
         // console.log('user ' + user)
         return new Res(user, email, null);
     } catch (err) {
