@@ -13,13 +13,12 @@ let accessToken = ''
 let refreshToken = ''
 
 beforeAll(async ()=>{
-    await Post.remove()
-    await User.remove()
+    await User.findOneAndDelete({'email':userEmail})
 })
 
 afterAll(async ()=>{
-    await Post.remove()
-    await User.remove()
+    // await Post.remove()
+    await User.findOneAndDelete({'email':userEmail})
     mongoose.connection.close()
 })
 
@@ -48,6 +47,15 @@ describe("Auth Tests", ()=>{
         const access = response.body.accesstoken
         expect(access).toBeUndefined()
     })
+    test("Login test wrog email",async ()=>{
+        const response = await request(app).post('/auth/login').send({
+            "email": userEmail + "AAA",
+            "password": userPassword 
+        })
+        expect(response.statusCode).not.toEqual(200)
+        const access = response.body.accesstoken
+        expect(access).toBeUndefined()
+    })
 
     test("Login test",async ()=>{
         const response = await request(app).post('/auth/login').send({
@@ -55,9 +63,9 @@ describe("Auth Tests", ()=>{
             "password": userPassword 
         })
         expect(response.statusCode).toEqual(200)
-        accessToken = response.body.accessToken
+        accessToken = response.body.tokens.accessToken
         expect(accessToken).not.toBeNull()
-        refreshToken = response.body.refreshToken
+        refreshToken = response.body.tokens.refreshToken
         expect(refreshToken).not.toBeNull()
     })
 

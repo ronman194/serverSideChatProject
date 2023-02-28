@@ -47,6 +47,9 @@ import auth from '../controllers/auth'
 *         password:
 *           type: string
 *           description: The user password
+*         profileImage:
+*           type: string
+*           description: The user profile image
 *       example:
 *         firstName: 'bob'
 *         lastName: 'bobi'

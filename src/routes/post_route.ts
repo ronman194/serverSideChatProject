@@ -22,16 +22,71 @@ import Err from '../common/Err';
 *       required:
 *         - message
 *         - sender
+*         - postImage
+*         - senderFirstName
+*         - senderLastName
+*         - senderProfileImage
 *       properties:
 *         message:
 *           type: string
 *           description: The post text
 *         sender:
 *           type: string
-*           description: The sending user id
+*           description: The sending user email
+*         postImage:
+*           type: string
+*           description: The post image 
+*         senderFirstName:
+*           type: string
+*           description: The sending user first name
+*         senderLastName:
+*           type: string
+*           description: The sending user last name
+*         senderProfileImage:
+*           type: string
+*           description: The sending user profile image
 *       example:
 *         message: 'this is my new post'
-*         sender: '12342345234556'
+*         sender: 'bob@gmail.com'
+*         postImage: 'https://images.unsplash.com/photo-1586671267731-da2cf3ceeb80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=389&q=80'
+*         senderFirstName: 'bob'
+*         senderLastName: 'bobi'
+*         senderProfileImage: 'https://images.unsplash.com/photo-1586671267731-da2cf3ceeb80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=389&q=80'
+*     AddPost:
+*       type: object
+*       required:
+*         - message
+*         - sender
+*         - image
+*         - firstName
+*         - lastName
+*         - profileImage
+*       properties:
+*         message:
+*           type: string
+*           description: The post text
+*         sender:
+*           type: string
+*           description: The sending user email
+*         image:
+*           type: string
+*           description: The post image 
+*         firstName:
+*           type: string
+*           description: The sending user first name
+*         lastName:
+*           type: string
+*           description: The sending user last name
+*         profileImage:
+*           type: string
+*           description: The sending user profile image
+*       example:
+*         message: 'this is my new post'
+*         sender: 'bob@gmail.com'
+*         image: 'https://images.unsplash.com/photo-1586671267731-da2cf3ceeb80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=389&q=80'
+*         firstName: 'bob'
+*         lastName: 'bobi'
+*         profileImage: 'https://images.unsplash.com/photo-1586671267731-da2cf3ceeb80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=389&q=80'
 */
 
 /**
@@ -130,7 +185,7 @@ router.get('/:id', auth.authenticateMiddleware, async (req, res) => {
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Post'
+ *             $ref: '#/components/schemas/AddPost'
  *     responses:
  *       200:
  *         description: the requested post
@@ -219,10 +274,6 @@ router.put('/:id', auth.authenticateMiddleware, async (req, res) => {
  *     responses:
  *       200:
  *         description: the post deleted
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Post'
  *  
  */
 router.delete('/:id', auth.authenticateMiddleware, async (req, res) => {
