@@ -55,6 +55,31 @@ import auth from '../controllers/auth'
 *         lastName: 'bobi'
 *         email: 'bob@gmail.com'
 *         password: '123456'
+*     UpdateUser:
+*       type: object
+*       required:
+*         - firstName
+*         - lastName
+*         - email
+*         - profileImage
+*       properties:
+*         firstName:
+*           type: string
+*           description: The user update first name
+*         lastName:
+*           type: string
+*           description: The user update last name
+*         email:
+*           type: string
+*           description: The user email
+*         profileImage:
+*           type: string
+*           description: The user update profile image
+*       example:
+*         firstName: 'bo'
+*         lastName: 'bob'
+*         email: 'bob@gmail.com'
+*         profileImage: 'https://images.unsplash.com/photo-1677530248563-e6105354fafb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60'
 */
 
 /**
@@ -86,7 +111,7 @@ import auth from '../controllers/auth'
  *                 description: The error description 
  *  
  */
-router.post('/register',auth.register)
+router.post('/register', auth.register)
 
 
 /**
@@ -118,7 +143,7 @@ router.post('/register',auth.register)
  *               refresh_token: '123456...'
  *
  */
-router.post('/login',auth.login)
+router.post('/login', auth.login)
 
 /**
  * @swagger
@@ -145,7 +170,7 @@ router.post('/login',auth.login)
  *               refresh_token: '123456...'
  *
  */
-router.get('/refresh',auth.refresh)
+router.get('/refresh', auth.refresh)
 
 
 /**
@@ -161,9 +186,32 @@ router.get('/refresh',auth.refresh)
  *         description: logout sucess, refresh token is invalidated
  *
  */
-router.get('/logout',auth.logout)
+router.get('/logout', auth.logout)
 
-
+/**
+ * @swagger
+ * /auth/update:
+ *   put:
+ *     summary: update a user profile
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateUser'
+ *     responses:
+ *       200:
+ *         description: update user details successful
+*         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *  
+ *
+ */
 router.put('/update', auth.authenticateMiddleware, async (req, res) => {
     try {
         const response: Res = await auth.updateProfile(Req.fromRestRequest(req));

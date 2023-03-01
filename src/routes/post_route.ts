@@ -87,6 +87,21 @@ import Err from '../common/Err';
 *         firstName: 'bob'
 *         lastName: 'bobi'
 *         profileImage: 'https://images.unsplash.com/photo-1586671267731-da2cf3ceeb80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=389&q=80'
+*     UpdatePost:
+*       type: object
+*       required:
+*         - message 
+*         - updateImage 
+*       properties:
+*         message:
+*           type: string
+*           description: The post update text
+*         updateImage:
+*           type: string
+*           description: The post update image 
+*       example:
+*         message: 'this is my new and update post'
+*         updateImage: 'https://images.unsplash.com/photo-1677530248563-e6105354fafb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxNXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60'
 */
 
 /**
@@ -120,14 +135,16 @@ router.get('/', auth.authenticateMiddleware, async (req, res) => {
         if (response.err == null) {
             response.sendRestResponse(res);
         }
-        if (response.err.code === 400) {
-            return res.status(400).send({
-                'status': 'fail',
-                'message': response.err.message
-            });
+        if (response.err.code) {
+            if (response.err.code === 400) {
+                return res.status(400).send({
+                    'status': 'fail',
+                    'message': response.err.message
+                });
+            }
         }
     } catch (err) {
-        console.log("ERR")
+        console.log(err)
     }
 });
 
@@ -161,11 +178,13 @@ router.get('/:id', auth.authenticateMiddleware, async (req, res) => {
         if (response.err == null) {
             response.sendRestResponse(res);
         }
-        if (response.err.code === 400) {
-            return res.status(400).send({
-                'status': 'fail',
-                'message': response.err.message
-            });
+        if (response.err.code != null) {
+            if (response.err.code === 400) {
+                return res.status(400).send({
+                    'status': 'fail',
+                    'message': response.err.message
+                });
+            }
         }
     } catch (err) {
         console.log("ERR")
@@ -229,10 +248,10 @@ router.post('/', auth.authenticateMiddleware, async (req, res) => {
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Post'
+ *             $ref: '#/components/schemas/UpdatePost'
  *     responses:
  *       200:
- *         description: the requested post
+ *         description: the requested update post
  *         content:
  *           application/json:
  *             schema:
