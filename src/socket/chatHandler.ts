@@ -5,26 +5,35 @@ import Message from "../models/message_model";
 export = (io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap>,
     socket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap>) => {
 
-    const sendMessage =async (payload) => {
-        const to = payload.to;
+    const sendMessage = async (payload) => {
+        const senderImage = payload.senderImage;
         const message = payload.message;
-        const from = socket.data.user;
+        const from = payload.user;
         const newMessage = new Message({
             'message': message,
             'sender': from,
-            'reciver': to
+            'senderImage': senderImage,
+            'time': Date.now()
         });
         await newMessage.save();
-        io.to(to).emit("chat:message", { 'to': to, 'from': from, 'message': message });
+        console.log("New Message")
+        console.log(newMessage)
+        io.emit("newMessage", newMessage);
     }
-    const getMessage =async (payload) => {
-        const userId = payload.userId;
-        const reciveMessages = await Message.find({'reciver': userId});
-        const sendMessages = await Message.find({'sender': userId});
-        socket.emit("chat:get_messages.response", { 'userId': userId, 'reciveMessages': reciveMessages, 'sendMessages': sendMessages });
+    const getMessage = async () => {
+        // const userId = payload.userId;
+        const messages = await Message.find();
+        console.log("Get Messages")
+        console.log(messages)
+        // const reciveMessages = await Message.find({'reciver': userId});
+        // const sendMessages = await Message.find({'sender': userId});
+        io.emit("allMessages", messages);
     }
 
     console.log('register chat handlers');
-    socket.on("chat:send_message", sendMessage);
-    socket.on("chat:get_messages", getMessage);
+    socket.on("newMessage", sendMessage);
+    socket.on("allMessages", getMessage);
+    socket.on('disconnect', () => {
+        console.log('A user has disconnected');
+    });
 }

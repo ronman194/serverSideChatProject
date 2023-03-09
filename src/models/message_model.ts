@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const messageSchema = new mongoose.Schema({
-    message:{
+    message: {
         type: String,
         required: true
     },
@@ -9,11 +9,17 @@ const messageSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    reciver: {
+    senderImage: {
         type: String,
         required: true
-    }
+    },
+    time: {
+        type: Date,
+        required: true,
+        default: Date.now,
+    },
+
 })
 
-export = mongoose.model('Message',messageSchema)
+export = mongoose.model('Message', messageSchema)
 
