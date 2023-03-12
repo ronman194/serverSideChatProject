@@ -16,21 +16,13 @@ export = (io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap>,
             'time': Date.now()
         });
         await newMessage.save();
-        console.log("New Message")
-        console.log(newMessage)
         io.emit("newMessage", newMessage);
     }
     const getMessage = async () => {
-        // const userId = payload.userId;
         const messages = await Message.find();
-        console.log("Get Messages")
-        console.log(messages)
-        // const reciveMessages = await Message.find({'reciver': userId});
-        // const sendMessages = await Message.find({'sender': userId});
         io.emit("allMessages", messages);
     }
 
-    console.log('register chat handlers');
     socket.on("newMessage", sendMessage);
     socket.on("allMessages", getMessage);
     socket.on('disconnect', () => {
