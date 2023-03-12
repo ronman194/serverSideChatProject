@@ -29,9 +29,6 @@ app.use('/auth', authRouter);
 import postRouter from './routes/post_route';
 app.use('/post', postRouter);
 
-import studentRouter from './routes/student_route';
-app.use('/student', studentRouter);
-
 import fileRouter from './routes/file_route';
 app.use('/file', fileRouter);
 

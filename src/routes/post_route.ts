@@ -135,7 +135,7 @@ router.get('/', auth.authenticateMiddleware, async (req, res) => {
         if (response.err == null) {
             response.sendRestResponse(res);
         }
-        if (response.err.code) {
+        if (response.err.code != null) {
             if (response.err.code === 400) {
                 return res.status(400).send({
                     'status': 'fail',
@@ -144,7 +144,6 @@ router.get('/', auth.authenticateMiddleware, async (req, res) => {
             }
         }
     } catch (err) {
-        console.log(err)
     }
 });
 
@@ -187,7 +186,6 @@ router.get('/:id', auth.authenticateMiddleware, async (req, res) => {
             }
         }
     } catch (err) {
-        console.log("ERR")
     }
 });
 
@@ -264,14 +262,15 @@ router.put('/:id', auth.authenticateMiddleware, async (req, res) => {
         if (response.err == null) {
             response.sendRestResponse(res);
         }
-        if (response.err.code === 400) {
-            return res.status(400).send({
-                'status': 'fail',
-                'message': response.err.message
-            });
+        if (response.err.code != null) {
+            if (response.err.code === 400) {
+                return res.status(400).send({
+                    'status': 'fail',
+                    'message': response.err.message
+                });
+            }
         }
     } catch (err) {
-        console.log("ERR")
     }
 });
 

@@ -31,7 +31,6 @@ const register = async (req: Request, res: Response) => {
     try {
         const user = await User.findOne({ 'email': email })
         if (user != null) {
-            console.log('user already registered, try a different name')
             return sendError(res, 'user already registered, try a different name')
         }
 
@@ -90,7 +89,6 @@ const login = async (req: Request, res: Response) => {
         console.log("HII")
         return res.status(200).send({ 'tokens': tokens, 'user': user })
     } catch (err) {
-        console.log("error: " + err)
         return sendError(res, 'fail checking user')
     }
 }
@@ -122,8 +120,6 @@ const refresh = async (req: Request, res: Response) => {
         const tokens = await generateTokens(userObj._id.toString())
 
         userObj.refresh_tokens[userObj.refresh_tokens.indexOf(refreshToken)] = tokens.refreshToken
-        console.log("refresh token: " + refreshToken)
-        console.log("with token: " + tokens.refreshToken)
         await userObj.save()
 
         return res.status(200).send(tokens)

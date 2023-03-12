@@ -1,8 +1,6 @@
 import { Server } from "socket.io"
 import http from 'http';
 import jwt from 'jsonwebtoken';
-import echoHandler from './socket/echoHandler';
-import postHandler from './socket/postHandler';
 import chatHandler from "./socket/chatHandler";
 
 export = (server: http.Server) => {
@@ -24,10 +22,7 @@ export = (server: http.Server) => {
 
     io.on('connection', async (socket) => {
         console.log('a user connected ' + socket.id);
-        echoHandler(io, socket);
-        postHandler(io, socket);
         chatHandler(io, socket);
-
         const userId = socket.data.user;
         await socket.join(userId);
     });

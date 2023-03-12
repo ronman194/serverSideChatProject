@@ -34,8 +34,6 @@ const getPostById = async (req) => {
 
 
 const addNewPost = async (req) => {
-    console.log(req.body);
-
     const post = new Post({
         message: req.body.message,
         sender: req.body.sender,     //extract the user id from the auth 
@@ -50,7 +48,6 @@ const addNewPost = async (req) => {
         post.sender = req.userId;
         try {
             const newPost = await post.save();
-            console.log("Save Succesful id: " + newPost._id);
             return new Res(newPost, req.userId, null);
         } catch (err) {
             return new Res(null, req.userId, new Err(400, err.message));
@@ -78,7 +75,6 @@ const putPostById = async (req) => {
         const post = await Post.findByIdAndUpdate(postId, { 'message': updateMessage, 'postImage': updateImage }, { new: true })
         return new Res(post, req.body.userId, null);
     } catch (err) {
-        console.log("fail to update post in db")
         return new Res(new Err(400, err.message), req.body.userId, new Err(400, err.message));
     }
 }
