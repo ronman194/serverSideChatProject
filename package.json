@@ -9,7 +9,7 @@
     "lint": "eslint . --ext .ts",
     "devstart": "nodemon ./src/app.ts",
     "testAuth": "tsc && jest --detectOpenHandles --forceExit --runInBand --coverage ./src/tests/auth.test.ts",
-    "testSocket": "tsc && jest --detectOpenHandles --forceExit --runInBand --coverage ./dist/src/tests/socket.test.js",
+    "testSocket": "tsc && jest --detectOpenHandles --forceExit --runInBand --coverage ./src/tests/socket.test.ts",
     "testPost": "tsc && jest --detectOpenHandles --forceExit --runInBand --coverage ./src/tests/post.test.ts"
   },
   "author": "Ron Mansharof",

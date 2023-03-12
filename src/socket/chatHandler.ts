@@ -34,6 +34,6 @@ export = (io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap>,
     socket.on("newMessage", sendMessage);
     socket.on("allMessages", getMessage);
     socket.on('disconnect', () => {
-        console.log('A user has disconnected');
+        // console.log('A user has disconnected');
     });
 }
