@@ -114,4 +114,18 @@ describe("Posts Tests", () => {
 
         })
     })
+    describe("Delete", () => {
+        test("delete post by ID", async () => {
+            let response = await request(app).delete('/post/' + newPostId).set('Authorization', 'JWT ' + accessToken)
+
+            expect(response.statusCode).toEqual(200)
+
+        })
+        test("delete post by wrong ID", async () => {
+            let response = await request(app).delete('/post/' + 12345).set('Authorization', 'JWT ' + accessToken)
+
+            expect(response.statusCode).not.toEqual(200)
+
+        })
+    })
 })

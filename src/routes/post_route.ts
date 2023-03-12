@@ -279,7 +279,7 @@ router.put('/:id', auth.authenticateMiddleware, async (req, res) => {
  * @swagger
  * /post/{id}:
  *   delete:
- *     summary: get post by id
+ *     summary: delete post by id
  *     tags: [Post]
  *     security:
  *       - bearerAuth: []
