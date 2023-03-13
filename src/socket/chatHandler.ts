@@ -11,7 +11,7 @@ export = (io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap>,
         const from = payload.user;
         const newMessage = new Message({
             'message': message,
-            'sender': from,
+            'sender': from.toLowerCase(),
             'senderImage': senderImage,
             'time': Date.now()
         });

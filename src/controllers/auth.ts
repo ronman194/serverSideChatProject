@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken'
 import Res from '../common/Res'
 import Err from '../common/Err'
 import Post from '../models/post_model'
+import message_model from '../models/message_model'
 
 function sendError(res: Response, error: string) {
     res.status(400).send({
@@ -167,6 +168,10 @@ const updateProfile = async (req) => {
                 'senderFirstName': updateFirstName,
                 'senderLastName': updateLastName,
                 'senderProfileImage': updateImgProfile
+            })
+        await message_model.updateMany({ 'sender': email },
+            {
+                'senderImage': updateImgProfile
             })
         // console.log('user ' + user)
         return new Res(user, email, null);
