@@ -1,31 +1,18 @@
 ## SERVER CHAT APP
 
 - In this assignment, I have to create a REST API and Socket.io server, based on Node.js, Express, and Socket.io.
-- I also required to write a unit test for each API, socket.io events.
+- I also required to write a unit test (using JEST) for each API, socket.io events.
 - The socket calls implementation is the same as the REST controller, so there is no duplication in the code.
 
-
-### SCHEMA
-- Post Schema     
-{
-message: String,
-sender: String
-}
-- User Schema     
-{
-email: String,
-password: String,
-refresh_tokens: [String]
-}
-- Message Schema     
-{
-message: String,
-sender: String,
-reciver: String
-}
-
-
 ### API
+- Register - This API enables the user to register to the app
+ POST http://localhost:3000/auth/register
+- Login - This API enables the user to login to the app
+ POST http://localhost:3000/auth/login
+- Logout - This API enables the user to logout from the app
+ GET http://localhost:3000/auth/logout
+- Update User - This API enables the user to update his details
+ PUT http://localhost:3000/auth/update
 - GETL ALL POSTS - This API return all the posts in the DB
  GET http://localhost:3000/post
 -  GETL POSTS BY SENDER - This API retunr all the posts in the DB that send by this sender ID
@@ -34,25 +21,12 @@ reciver: String
  GET http://localhost:3000/post/{postID}
 -  ADD NEW POST - This API create a new post
 POST http://localhost:3000/post
-add request body to the request {
-"message": "YOUR MESSAGE",
-"sender": "senderID"
-}
 -  UPDATE POST BY ID - This API update post by id
 PUT http://localhost:3000/post/{postID}
-add request body to the request {
-"message": "YOUR NEW MESSAGE",
-}
 
 ### Socket.Io
-- Add new post: the event is “post:post”, the data is the same as in the REST api.
-- Get all posts: the event is“post:get”
-- Get post by id: the event is “post:get:id”, the id will be specified in the arguments of the event in the form: {“id” : 12345… }
-- Get a post by sender: the event is “post:get:sender”, the sender will be specified in the arguments of the event in the form: {“sender” : 12345… }
-- Update a post: the event is “post:put”, the data is the same as in the REST api.
-
-
-
+- Add new message: the event is “newMessage”, add the message data when emit.
+- Get all messages: the event is “allMessages”, then we get all the messages in the DB.
 
 ### HOW TO RUN THIS PROJECT
 1. Clone the repository to your local machine:
